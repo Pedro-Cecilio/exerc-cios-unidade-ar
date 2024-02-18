@@ -30,37 +30,37 @@ public class Menu implements IMenu {
     @Override
     public void switchCase(Estoque estoque, Pedido pedido, Scanner scanner) {
 
-        int opcao = Utils.leituraDeDadoInteiro(scanner); 
+        int opcao = Utils.leituraDeDadoInteiro(scanner);
         switch (opcao) {
             case 1:
                 this.mostraEstoque(estoque);
                 break;
             case 2:
-                this.adicionarItensNoPedido(estoque, pedido, scanner);
+                this.apresentarAdicionarItensNoPedido(estoque, pedido, scanner);
                 break;
             case 3:
-                this.removerItemDoPedido(estoque, pedido, scanner);
+                this.apresentarRemoverItemDoPedido(estoque, pedido, scanner);
                 break;
             case 4:
                 pedido.limparCarrinho();
                 break;
             case 5:
-                this.atualizarItemDoPedido(estoque, pedido, scanner);
+                this.apresentarAtualizarItemDoPedido(estoque, pedido, scanner);
                 break;
             case 6:
                 pedido.imprimePedido();
                 break;
             case 7:
-                this.finalizarPedido(estoque, pedido, scanner);
+                this.apresentarFinalizarPedido(estoque, pedido, scanner);
                 break;
             case 8:
-                this.inserirProdutoNoEstoque(estoque, scanner);
+                this.apresentarInserirProdutoNoEstoque(estoque, scanner);
                 break;
             case 9:
-                this.finalizarPedido(estoque, pedido, scanner);
+                this.apresentarRemoverProdutoDoEstoque(estoque, scanner);
                 break;
             case 10:
-                this.finalizarPedido(estoque, pedido, scanner);
+                this.apresentarAtualizarProdutoDoEstoque(estoque, scanner);
                 break;
             case 0:
                 System.out.println("Você escolheu sair. Até mais!");
@@ -72,20 +72,41 @@ public class Menu implements IMenu {
         }
 
     }
-    private void inserirProdutoNoEstoque(Estoque estoque, Scanner scanner) {
-        System.out.println("Insira o nome do novo produto:");
-        String nome = scanner.nextLine();
-        System.out.println("Insira o preço do produto:");
+
+    private void apresentarInserirProdutoNoEstoque(Estoque estoque, Scanner scanner) {
+        System.out.println("Insira o nome do novo produto a ser criado(Ex: Banana):");
+        String nome = scanner.next();
+        Utils.validarNomeProduto(nome.trim());
+        System.out.println("Insira o preço do produto(Ex: 1,99):");
         double preco = Utils.leituraDeDadoDouble(scanner);
-        if(preco < 0){
+        if (preco < 0) {
             System.out.println("O preço deve ser maior que zero!");
             return;
         }
-        System.out.println("Insira a quantidade em estoque do produto:");
+        System.out.println("Insira a quantidade em estoque do produto(Ex: 15):");
         int quantidade = Utils.leituraDeDadoInteiro(scanner);
-        estoque.inserirProdutoNoEstoque(nome, preco, quantidade);
+        estoque.inserirProdutoNoEstoque(nome.trim(), preco, quantidade);
+        System.out.println("Produto adicionado com sucesso!");
 
     }
+
+    private void apresentarRemoverProdutoDoEstoque(Estoque estoque, Scanner scanner) {
+        System.out.println("Insira o id produto a ser removido(Ex: 1):");
+        int id = Utils.leituraDeDadoInteiro(scanner);
+        estoque.removerProdutoEmEstoque(id);
+        System.out.println("Produto removido com sucesso!");
+    }
+
+    private void apresentarAtualizarProdutoDoEstoque(Estoque estoque, Scanner scanner) {
+        System.out.println("Insira o id produto a ser atualizado(Ex: 1):");
+        int id = Utils.leituraDeDadoInteiro(scanner);
+        System.out.println("Insira a nova quantidade em estoque do produto(Ex: 15):");
+        int quantidade = Utils.leituraDeDadoInteiro(scanner);
+        System.out.println(quantidade);
+        estoque.atualizarQuantidadeProdutoEmEstoque(id, quantidade);
+        System.out.println("Produto atualizado com sucesso!");
+    }
+
     private void apresentarMenu() {
         System.out.println("\n===============================");
         System.out.println("   Sistema do Super Mercado");
@@ -106,7 +127,7 @@ public class Menu implements IMenu {
 
     }
 
-    private void adicionarItensNoPedido(Estoque estoque, Pedido pedido, Scanner scanner) {
+    private void apresentarAdicionarItensNoPedido(Estoque estoque, Pedido pedido, Scanner scanner) {
         int opcao = this.capturarOpcaoParaInformarProduto(scanner, "Adicionar");
         switch (opcao) {
             case 1:
@@ -133,6 +154,9 @@ public class Menu implements IMenu {
                 }
                 pedido.adicionarItemNaLista(produto, quantidade);
                 break;
+            case 0:
+
+                break;
             default:
                 System.out.println("Opção inválida!");
                 break;
@@ -140,7 +164,7 @@ public class Menu implements IMenu {
 
     }
 
-    private void removerItemDoPedido(Estoque estoque, Pedido pedido, Scanner scanner) {
+    private void apresentarRemoverItemDoPedido(Estoque estoque, Pedido pedido, Scanner scanner) {
         int opcao = this.capturarOpcaoParaInformarProduto(scanner, "Remover");
         switch (opcao) {
             case 1:
@@ -165,6 +189,9 @@ public class Menu implements IMenu {
 
                 pedido.removerItemDaLista(item.get());
                 break;
+            case 0:
+
+                break;
             default:
                 System.out.println("Opção inválida!");
                 break;
@@ -172,7 +199,7 @@ public class Menu implements IMenu {
 
     }
 
-    private void atualizarItemDoPedido(Estoque estoque, Pedido pedido, Scanner scanner) {
+    private void apresentarAtualizarItemDoPedido(Estoque estoque, Pedido pedido, Scanner scanner) {
         int opcao = this.capturarOpcaoParaInformarProduto(scanner, "Atualizar");
         switch (opcao) {
             case 1:
@@ -199,6 +226,9 @@ public class Menu implements IMenu {
 
                 pedido.atualizarItemDaLista(item.get(), quantidade);
                 break;
+            case 0:
+
+                break;
             default:
                 System.out.println("Opção inválida!");
                 break;
@@ -210,9 +240,10 @@ public class Menu implements IMenu {
         System.out.println("Opções disponíveis para %s item:".formatted(operacao.toLowerCase()));
         System.out.println("1 - %s pelo nome do produto".formatted(operacao));
         System.out.println("2 - %s pelo id do produto".formatted(operacao));
+        System.out.println("0 - Voltar para o menu");
+
         int opcao = Utils.leituraDeDadoInteiro(scanner);
-        if (opcao != 1 && opcao != 2) {
-            System.out.println("Vou mandar um illegal");
+        if (opcao != 1 && opcao != 2 && opcao != 0) {
             throw new IllegalArgumentException("Opção inválida");
         }
         return opcao;
@@ -224,7 +255,7 @@ public class Menu implements IMenu {
         return Utils.leituraDeDadoDouble(scanner);
     }
 
-    public void finalizarPedido(Estoque estoque, Pedido pedido, Scanner scanner) {
+    public void apresentarFinalizarPedido(Estoque estoque, Pedido pedido, Scanner scanner) {
         if (pedido.getListaDeItens().isEmpty()) {
             System.out.println("Carrinho vazio!");
             return;

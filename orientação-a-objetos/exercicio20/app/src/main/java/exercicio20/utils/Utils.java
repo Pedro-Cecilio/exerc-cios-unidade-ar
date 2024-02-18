@@ -1,6 +1,7 @@
 package exercicio20.utils;
 import java.text.Normalizer;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 import java.util.InputMismatchException;
 
 
@@ -25,4 +26,11 @@ public class Utils {
             throw new InputMismatchException("Esse campo precisa ser um valor inteiro ou decimal");
         }
    }
+   public static void validarNomeProduto(String nome) {
+        // Expressão regular para aceitar apenas letras e pontos no nome do produto
+        String regex = "^[A-Za-z\\\\s]+$";
+        if(!Pattern.matches(regex, nome)){
+            throw new IllegalArgumentException("O nome do produto não pode conter numeros, acentos ou caracteres especiais, apenas letras.");
+        }
+    }
 }

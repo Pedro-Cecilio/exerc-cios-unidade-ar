@@ -28,10 +28,10 @@ public class Estoque implements IEstoque {
     }
 
     @Override
-    public Produto encontraProduto(String nome) throws NoSuchElementException {
-        Optional<Produto> produto = this.listaDeProdutos.stream().filter(prod ->{ 
-            String nomeProdutoEstoque = Utils.removeAcentos(prod.getNome()); 
-            String nomeProducoProcurado = Utils.removeAcentos(nome); 
+    public Produto encontraProduto(String nome) {
+        Optional<Produto> produto = this.listaDeProdutos.stream().filter(prod -> {
+            String nomeProdutoEstoque = Utils.removeAcentos(prod.getNome());
+            String nomeProducoProcurado = Utils.removeAcentos(nome);
             return nomeProdutoEstoque.equalsIgnoreCase(nomeProducoProcurado);
         }).findFirst();
 
@@ -42,7 +42,7 @@ public class Estoque implements IEstoque {
     }
 
     @Override
-    public Produto encontraProduto(int id) throws NoSuchElementException {
+    public Produto encontraProduto(int id) {
         Optional<Produto> produto = this.listaDeProdutos.stream().filter(prod -> prod.getId() == id).findFirst();
         if (produto.isEmpty()) {
             throw new NoSuchElementException("Produto não encontrado.");
@@ -50,7 +50,7 @@ public class Estoque implements IEstoque {
         return produto.get();
     }
 
-    public Produto encontraProduto(Produto produto) throws NoSuchElementException {
+    public Produto encontraProduto(Produto produto) {
         Optional<Produto> produtoBuscado = this.listaDeProdutos.stream().filter(prod -> prod == produto).findFirst();
         if (produtoBuscado.isEmpty()) {
             throw new NoSuchElementException("Produto não encontrado.");
@@ -60,16 +60,18 @@ public class Estoque implements IEstoque {
 
     @Override
     public Boolean cadastraProduto(Produto produto) {
-        return this.listaDeProdutos.add(produto);
+        Boolean adicionado = this.listaDeProdutos.add(produto);
+        this.id += 1;
+        return adicionado;
     }
 
     @Override
     public void imprimeCatalogoDoEstoque() {
         listaDeProdutos.forEach(produto -> {
             String mensagem = """
-                PRODUTO [ ID: %-5d | Nome: %-20s | Preço: R$ %-7.2f | Quantidade em Estoque: %d ]
-                """.formatted(produto.getId(), produto.getNome(), produto.getPreco(),
-                produto.getQuantidadeEmEstoque());
+                    PRODUTO [ ID: %-5d | Nome: %-20s | Preço: R$ %-7.2f | Quantidade em Estoque: %d ]
+                    """.formatted(produto.getId(), produto.getNome(), produto.getPreco(),
+                    produto.getQuantidadeEmEstoque());
             System.out.println(mensagem);
 
         });
@@ -77,7 +79,7 @@ public class Estoque implements IEstoque {
     }
 
     @Override
-    public Boolean darBaixaEmEstoque(String nome, int quantidadeParaDarBaixa) throws NoSuchElementException {
+    public Boolean darBaixaEmEstoque(String nome, int quantidadeParaDarBaixa) {
         Produto produto = this.encontraProduto(nome);
         if (produto.getQuantidadeEmEstoque() < quantidadeParaDarBaixa) {
             return false;
@@ -97,7 +99,7 @@ public class Estoque implements IEstoque {
     }
 
     @Override
-    public int getQuantidadeAtualEmEstoque(Produto produto) throws NoSuchElementException {
+    public int getQuantidadeAtualEmEstoque(Produto produto) {
         return this.encontraProduto(produto).getQuantidadeEmEstoque();
     }
 
@@ -112,18 +114,30 @@ public class Estoque implements IEstoque {
     }
 
     @Override
-    public Boolean temEstoqueOuNao(Produto produto, int quantidadeParaDarBaixa) throws NoSuchElementException {
+    public Boolean temEstoqueOuNao(Produto produto, int quantidadeParaDarBaixa) {
         Produto produtoBuscado = this.encontraProduto(id);
         return produtoBuscado.getQuantidadeEmEstoque() >= quantidadeParaDarBaixa;
     }
 
-    public void inserirProdutoNoEstoque(String nome, double preco, int quantidade){
-        Produto produto = new Produto(this.listaDeProdutos.size() + 1, nome, preco, quantidade);
+    public void inserirProdutoNoEstoque(String nome, double preco, int quantidade) {
+        Produto produto = new Produto(id, nome, preco, quantidade);
         this.cadastraProduto(produto);
     }
 
     public void removerProdutoEmEstoque(int id) {
         Produto produto = this.encontraProduto(id);
         this.listaDeProdutos.remove(produto);
+    }
+
+    public void atualizarQuantidadeProdutoEmEstoque(int id, int novaQuantidade) {
+        Produto produto = this.encontraProduto(id);
+        System.out.println(novaQuantidade);
+        if (novaQuantidade < 0) {
+            throw new IllegalArgumentException("A quantidade não pode ser negativa");
+        }
+        System.out.println(produto.getNome());
+        System.out.println(novaQuantidade);
+        produto.setQuantidadeEmEstoque(novaQuantidade);
+        System.out.println(produto.getQuantidadeEmEstoque());
     }
 }

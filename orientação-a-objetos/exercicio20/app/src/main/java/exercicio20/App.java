@@ -24,10 +24,11 @@ public class App {
             } catch (IllegalArgumentException e) {
                 System.out.println("\n" + e.getMessage() + "\n");
             } catch (InputMismatchException e) {
-                scanner.next();
+                if(scanner.hasNext()){
+                    scanner.next();
+                }
                 System.out.println("\n" + e.getMessage() + "\n");
             } catch (NoSuchElementException e) {
-                scanner.next();
                 System.out.println("\nHouve um erro:" + e.getMessage() + "\n");
             } catch (RuntimeException e) {
                 System.out.println("\n" + e.getMessage() + "\n");
