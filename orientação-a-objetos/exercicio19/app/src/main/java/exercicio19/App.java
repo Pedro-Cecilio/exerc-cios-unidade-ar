@@ -71,7 +71,6 @@ public class App {
                 agenda.atualizarContato(idContatoAtualizar, contatoDto.nome(), contatoDto.telefone());
                 break;
             case 4:
-                System.out.println("Entrou nisso aqui");
                 System.out.println(agenda.getAgendaTelefonica());
                 break;
 

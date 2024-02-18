@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Insira sua idade:");
         int age =  scanner.nextInt();
         boolean validation = age >= 18;
         scanner.close();

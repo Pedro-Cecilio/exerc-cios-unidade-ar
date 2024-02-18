@@ -20,7 +20,9 @@ public class App {
                 """;
         System.out.println(menu);
         char operacao = scanner.next().charAt(0);
+        System.out.println("Insira o primeiro valor:");
         double n1 = scanner.nextDouble();
+        System.out.println("Insira o segundo valor:");
         double n2 = scanner.nextDouble();
 
         switch (operacao) {

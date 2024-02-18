@@ -15,7 +15,9 @@ repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
-
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+}
 dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")

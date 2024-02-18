@@ -24,6 +24,10 @@ dependencies {
     implementation("com.google.guava:guava:31.1-jre")
 }
 
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+}
+
 application {
     // Define the main class for the application.
     mainClass.set("exercicio13.App")

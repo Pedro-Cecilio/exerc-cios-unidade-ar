@@ -26,7 +26,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("exercicio15.App")
+    mainClass.set("exercicio16.App")
 }
 
 tasks.named<Test>("test") {

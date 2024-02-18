@@ -4,9 +4,7 @@
 package exercicio16;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class App {
@@ -37,7 +35,7 @@ public class App {
             return (emp.getLivro().getId() == livro.getId() && emp.isAtivo());
         }).findFirst();
         if(emprestimo.isPresent()){
-            System.out.printf("O livro de nome: %s e id: %d já está emprestado.\n", livro.getNome(), livro.getId());
+            System.out.printf("O livro de nome: %s e id: %d ja esta emprestado.\n", livro.getNome(), livro.getId());
             return;
         }
         Emprestimo novoEmprestimo = new Emprestimo(livro, pessoa);
