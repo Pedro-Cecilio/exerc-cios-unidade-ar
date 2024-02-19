@@ -72,7 +72,7 @@ public class Pedido implements IPedido {
 
     @Override
     public void imprimeValorTotal() {
-        System.out.println("Valor total do pedido: " + this.getValorTotalDoPedido());
+        System.out.println("Valor total do pedido: %.2f".formatted(this.getValorTotalDoPedido()) );
     }
 
     @Override
