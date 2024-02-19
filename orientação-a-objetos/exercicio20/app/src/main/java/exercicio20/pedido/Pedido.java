@@ -39,9 +39,7 @@ public class Pedido implements IPedido {
 
     @Override
     public Boolean adicionarItemNaLista(Produto produto, int quantidade) {
-        System.out.println("antes de instanciar");
         Item item = new Item(produto, quantidade);
-        System.out.println("depois de instanciar");
 
         return this.listaDeItens.add(item);
     }
@@ -51,8 +49,11 @@ public class Pedido implements IPedido {
     }
 
     public void atualizarItemDaLista(Item item, int quantidade) {
-        if (item.getQuantidade() < quantidade) {
-            throw new IllegalArgumentException("Esse item possui somente %d produtos".formatted(item.getQuantidade()));
+        if (item.getProduto().getQuantidadeEmEstoque() < quantidade) {
+            throw new IllegalArgumentException("O estoque possui somente %d desse produto".formatted(item.getProduto().getQuantidadeEmEstoque()));
+        }
+        if(quantidade == 0){
+            this.listaDeItens.remove(item);
         }
         item.setQuantidade(quantidade);
     }

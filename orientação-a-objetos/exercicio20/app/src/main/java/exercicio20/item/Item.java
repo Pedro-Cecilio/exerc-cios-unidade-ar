@@ -25,9 +25,8 @@ public class Item implements IITem{
     }
 
     public void setQuantidade(int quantidade) {
-        System.out.println("Entrou pra setar quantidade");
         int quantidadeNoEstoque = this.produto.getQuantidadeEmEstoque();
-        if(quantidade <= quantidadeNoEstoque){
+        if(quantidade <= quantidadeNoEstoque && quantidade > 0){
             this.quantidade = quantidade;
             return;
         }

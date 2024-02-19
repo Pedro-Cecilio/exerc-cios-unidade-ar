@@ -131,13 +131,9 @@ public class Estoque implements IEstoque {
 
     public void atualizarQuantidadeProdutoEmEstoque(int id, int novaQuantidade) {
         Produto produto = this.encontraProduto(id);
-        System.out.println(novaQuantidade);
         if (novaQuantidade < 0) {
             throw new IllegalArgumentException("A quantidade não pode ser negativa");
         }
-        System.out.println(produto.getNome());
-        System.out.println(novaQuantidade);
         produto.setQuantidadeEmEstoque(novaQuantidade);
-        System.out.println(produto.getQuantidadeEmEstoque());
     }
 }

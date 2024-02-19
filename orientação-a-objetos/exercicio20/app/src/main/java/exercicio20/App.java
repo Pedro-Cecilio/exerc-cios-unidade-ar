@@ -27,11 +27,11 @@ public class App {
                 if(scanner.hasNext()){
                     scanner.next();
                 }
-                System.out.println("\n" + e.getMessage() + "\n");
+                System.out.println("\nHouve um erro:" + e.getMessage() + "\n");
             } catch (NoSuchElementException e) {
                 System.out.println("\nHouve um erro:" + e.getMessage() + "\n");
             } catch (RuntimeException e) {
-                System.out.println("\n" + e.getMessage() + "\n");
+                System.out.println("\nHouve um erro:" + e.getMessage() + "\n");
             }
         }
 

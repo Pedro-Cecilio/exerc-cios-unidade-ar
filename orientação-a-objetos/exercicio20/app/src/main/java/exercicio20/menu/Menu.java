@@ -102,7 +102,6 @@ public class Menu implements IMenu {
         int id = Utils.leituraDeDadoInteiro(scanner);
         System.out.println("Insira a nova quantidade em estoque do produto(Ex: 15):");
         int quantidade = Utils.leituraDeDadoInteiro(scanner);
-        System.out.println(quantidade);
         estoque.atualizarQuantidadeProdutoEmEstoque(id, quantidade);
         System.out.println("Produto atualizado com sucesso!");
     }
@@ -134,7 +133,6 @@ public class Menu implements IMenu {
                 String nome = pedido.recebeNomeDoTeclado(scanner);
                 Produto produto = estoque.encontraProduto(nome);
                 int quantidade = pedido.recebeQuantidadeDoTeclado(scanner);
-                System.out.println(quantidade);
                 Optional<Item> item = pedido.pegarItemComProduto(produto);
 
                 if (item.isPresent()) {
@@ -276,7 +274,7 @@ public class Menu implements IMenu {
                 Notas de 2: %d
                 """.formatted(notasTroco.notasDe100(), notasTroco.notasDe50(), notasTroco.notasDe20(),
                 notasTroco.notasDe10(), notasTroco.notasDe5(), notasTroco.notasDe2());
-        System.out.println("Valor do troco: " + troco);
+        System.out.println("Valor do troco: %.2f".formatted(troco));
         System.out.println("Menor quantidade de notas para o troco: ");
         System.out.println(mensagem);
         pedido.finalizarPedido(estoque);
